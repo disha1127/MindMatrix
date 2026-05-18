@@ -1,0 +1,30 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Global Helpers
+    function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+    function isDemoUser() { return true; } // Relaxed for demo mode
+
+    // User Rules
+    match /users/{userId} {
+      allow read, write: if true;
+    }
+
+    // Charging Point Rules
+    match /charging_points/{pointId} {
+      allow read, write: if true;
+    }
+
+    // Booking Rules
+    match /bookings/{bookingId} {
+      allow read, write: if true;
+    }
+  }
+}
