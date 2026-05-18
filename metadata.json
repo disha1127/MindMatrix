@@ -1,0 +1,6 @@
+{
+  "name": "EV-Grama Charge",
+  "description": "A community-driven EV charging network for rural areas, connecting electric 2-wheeler riders with local shop owners and households offering charging points.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": []
+}

@@ -1,0 +1,69 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "role": { "type": "string", "enum": ["rider", "host"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "ChargingPoint": {
+      "title": "Charging Point",
+      "description": "Information about a charging host/socket",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "hostId": { "type": "string" },
+        "hostName": { "type": "string" },
+        "address": { "type": "string" },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
+        "socketType": { "type": "string", "enum": ["5A", "15A"] },
+        "pricePerHour": { "type": "number" },
+        "availabilityStatus": { "type": "string", "enum": ["available", "busy"] },
+        "contactNumber": { "type": "string" },
+        "description": { "type": "string" },
+        "rating": { "type": "number" }
+      },
+      "required": ["hostId", "hostName", "latitude", "longitude", "socketType", "pricePerHour", "availabilityStatus"]
+    },
+    "Booking": {
+      "title": "Booking",
+      "description": "Booking record for a charging slot",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "pointId": { "type": "string" },
+        "hostId": { "type": "string" },
+        "slotTime": { "type": "string", "format": "date-time" },
+        "duration": { "type": "number" },
+        "totalPrice": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "completed", "cancelled"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "pointId", "hostId", "slotTime", "duration", "totalPrice", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "/charging_points/{pointId}": {
+      "schema": "ChargingPoint",
+      "description": "List of available charging points"
+    },
+    "/bookings/{bookingId}": {
+      "schema": "Booking",
+      "description": "Charging session bookings"
+    }
+  }
+}
